@@ -6,8 +6,12 @@ from private research experiments and uses a toy system with synthetic data.
 
 from pathlib import Path
 
-import matplotlib.pyplot as plt
 import numpy as np
+
+try:
+    import matplotlib.pyplot as plt
+except ModuleNotFoundError:  # Plotting is helpful but not required for the CSV result.
+    plt = None
 
 
 def solve_discrete_lqr(A: np.ndarray, B: np.ndarray, Q: np.ndarray, R: np.ndarray, iterations: int = 500) -> np.ndarray:
@@ -31,6 +35,28 @@ def simulate(A: np.ndarray, B: np.ndarray, K: np.ndarray, x0: np.ndarray, steps:
         states[k + 1] = A @ states[k] + B.flatten() * u
 
     return states, controls
+
+
+def write_plot(media_dir: Path, time: np.ndarray, control_time: np.ndarray, states: np.ndarray, controls: np.ndarray) -> bool:
+    if plt is None:
+        return False
+
+    fig, (ax_state, ax_control) = plt.subplots(2, 1, figsize=(8, 6), sharex=False)
+    ax_state.plot(time, states[:, 0], label="position")
+    ax_state.plot(time, states[:, 1], label="velocity")
+    ax_state.set_ylabel("state")
+    ax_state.grid(True, alpha=0.3)
+    ax_state.legend(loc="best")
+
+    ax_control.plot(control_time, controls, color="tab:red", label="control")
+    ax_control.set_xlabel("time [s]")
+    ax_control.set_ylabel("input")
+    ax_control.grid(True, alpha=0.3)
+    ax_control.legend(loc="best")
+
+    fig.tight_layout()
+    fig.savefig(media_dir / "lqr_double_integrator.png", dpi=160)
+    return True
 
 
 def main() -> None:
@@ -68,26 +94,15 @@ def main() -> None:
         comments="",
     )
 
-    fig, (ax_state, ax_control) = plt.subplots(2, 1, figsize=(8, 6), sharex=False)
-    ax_state.plot(time, states[:, 0], label="position")
-    ax_state.plot(time, states[:, 1], label="velocity")
-    ax_state.set_ylabel("state")
-    ax_state.grid(True, alpha=0.3)
-    ax_state.legend(loc="best")
-
-    ax_control.plot(control_time, controls, color="tab:red", label="control")
-    ax_control.set_xlabel("time [s]")
-    ax_control.set_ylabel("input")
-    ax_control.grid(True, alpha=0.3)
-    ax_control.legend(loc="best")
-
-    fig.tight_layout()
-    fig.savefig(media_dir / "lqr_double_integrator.png", dpi=160)
+    wrote_plot = write_plot(media_dir, time, control_time, states, controls)
 
     print("LQR gain K:", np.array2string(K, precision=4))
     print("Final state:", np.array2string(states[-1], precision=4))
     print("Wrote results/lqr_double_integrator_summary.csv")
-    print("Wrote media/lqr_double_integrator.png")
+    if wrote_plot:
+        print("Wrote media/lqr_double_integrator.png")
+    else:
+        print("Skipped plot because matplotlib is not installed")
 
 
 if __name__ == "__main__":
