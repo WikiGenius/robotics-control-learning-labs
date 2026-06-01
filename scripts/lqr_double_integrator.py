@@ -2,48 +2,101 @@
 
 This is a small, reproducible baseline example. It is intentionally separate
 from private research experiments and uses a toy system with synthetic data.
+The core CSV output uses only the Python standard library.
 """
 
-from pathlib import Path
+from __future__ import annotations
 
-import numpy as np
+import csv
+from pathlib import Path
 
 try:
     import matplotlib.pyplot as plt
 except ModuleNotFoundError:  # Plotting is helpful but not required for the CSV result.
     plt = None
 
+Matrix = list[list[float]]
+Vector = list[float]
 
-def solve_discrete_lqr(A: np.ndarray, B: np.ndarray, Q: np.ndarray, R: np.ndarray, iterations: int = 500) -> np.ndarray:
-    """Solve a discrete-time infinite-horizon LQR problem by Riccati iteration."""
-    P = Q.copy()
+
+def matmul(A: Matrix, B: Matrix) -> Matrix:
+    return [
+        [sum(A[i][k] * B[k][j] for k in range(len(B))) for j in range(len(B[0]))]
+        for i in range(len(A))
+    ]
+
+
+def transpose(A: Matrix) -> Matrix:
+    return [list(row) for row in zip(*A)]
+
+
+def matadd(A: Matrix, B: Matrix) -> Matrix:
+    return [[A[i][j] + B[i][j] for j in range(len(A[0]))] for i in range(len(A))]
+
+
+def matsub(A: Matrix, B: Matrix) -> Matrix:
+    return [[A[i][j] - B[i][j] for j in range(len(A[0]))] for i in range(len(A))]
+
+
+def outer_column_row(B: Matrix, K: Matrix) -> Matrix:
+    return [[B[i][0] * K[0][j] for j in range(len(K[0]))] for i in range(len(B))]
+
+
+def solve_discrete_lqr(A: Matrix, B: Matrix, Q: Matrix, R: Matrix, iterations: int = 500) -> Matrix:
+    """Solve a 2-state, 1-input discrete LQR problem by Riccati iteration."""
+    P = [row[:] for row in Q]
+    At = transpose(A)
+    Bt = transpose(B)
+
     for _ in range(iterations):
-        gain_term = R + B.T @ P @ B
-        K = np.linalg.solve(gain_term, B.T @ P @ A)
-        P = Q + A.T @ P @ (A - B @ K)
+        BtP = matmul(Bt, P)
+        gain_denominator = R[0][0] + matmul(BtP, B)[0][0]
+        gain_numerator = matmul(BtP, A)[0]
+        K = [[value / gain_denominator for value in gain_numerator]]
+        P = matadd(Q, matmul(matmul(At, P), matsub(A, outer_column_row(B, K))))
+
     return K
 
 
-def simulate(A: np.ndarray, B: np.ndarray, K: np.ndarray, x0: np.ndarray, steps: int) -> tuple[np.ndarray, np.ndarray]:
-    states = np.zeros((steps + 1, A.shape[0]))
-    controls = np.zeros(steps)
-    states[0] = x0
+def matvec(A: Matrix, x: Vector) -> Vector:
+    return [sum(A[i][j] * x[j] for j in range(len(x))) for i in range(len(A))]
 
-    for k in range(steps):
-        u = float((-K @ states[k]).item())
-        controls[k] = u
-        states[k + 1] = A @ states[k] + B.flatten() * u
+
+def simulate(A: Matrix, B: Matrix, K: Matrix, x0: Vector, steps: int) -> tuple[list[Vector], Vector]:
+    states = [x0[:]]
+    controls: Vector = []
+
+    for _ in range(steps):
+        current = states[-1]
+        u = -(K[0][0] * current[0] + K[0][1] * current[1])
+        controls.append(u)
+        ax = matvec(A, current)
+        states.append([ax[i] + B[i][0] * u for i in range(len(ax))])
 
     return states, controls
 
 
-def write_plot(media_dir: Path, time: np.ndarray, control_time: np.ndarray, states: np.ndarray, controls: np.ndarray) -> bool:
+def write_csv(results_dir: Path, dt: float, states: list[Vector], controls: Vector) -> None:
+    with (results_dir / "lqr_double_integrator_summary.csv").open("w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(["time_s", "position_m", "velocity_m_per_s", "control_input"])
+        for idx, state in enumerate(states):
+            control = controls[idx] if idx < len(controls) else ""
+            writer.writerow([round(idx * dt, 6), state[0], state[1], control])
+
+
+def write_plot(media_dir: Path, dt: float, states: list[Vector], controls: Vector) -> bool:
     if plt is None:
         return False
 
+    time = [idx * dt for idx in range(len(states))]
+    control_time = [idx * dt for idx in range(len(controls))]
+    positions = [state[0] for state in states]
+    velocities = [state[1] for state in states]
+
     fig, (ax_state, ax_control) = plt.subplots(2, 1, figsize=(8, 6), sharex=False)
-    ax_state.plot(time, states[:, 0], label="position")
-    ax_state.plot(time, states[:, 1], label="velocity")
+    ax_state.plot(time, positions, label="position")
+    ax_state.plot(time, velocities, label="velocity")
     ax_state.set_ylabel("state")
     ax_state.grid(True, alpha=0.3)
     ax_state.legend(loc="best")
@@ -61,13 +114,13 @@ def write_plot(media_dir: Path, time: np.ndarray, control_time: np.ndarray, stat
 
 def main() -> None:
     dt = 0.05
-    A = np.array([[1.0, dt], [0.0, 1.0]])
-    B = np.array([[0.5 * dt * dt], [dt]])
-    Q = np.diag([10.0, 1.0])
-    R = np.array([[0.1]])
+    A = [[1.0, dt], [0.0, 1.0]]
+    B = [[0.5 * dt * dt], [dt]]
+    Q = [[10.0, 0.0], [0.0, 1.0]]
+    R = [[0.1]]
 
     K = solve_discrete_lqr(A, B, Q, R)
-    states, controls = simulate(A, B, K, x0=np.array([1.0, 0.0]), steps=160)
+    states, controls = simulate(A, B, K, x0=[1.0, 0.0], steps=160)
 
     repo_root = Path(__file__).resolve().parents[1]
     results_dir = repo_root / "results"
@@ -75,29 +128,11 @@ def main() -> None:
     results_dir.mkdir(exist_ok=True)
     media_dir.mkdir(exist_ok=True)
 
-    time = np.arange(states.shape[0]) * dt
-    control_time = np.arange(controls.shape[0]) * dt
+    write_csv(results_dir, dt, states, controls)
+    wrote_plot = write_plot(media_dir, dt, states, controls)
 
-    summary = np.column_stack(
-        [
-            time,
-            states[:, 0],
-            states[:, 1],
-            np.r_[controls, np.nan],
-        ]
-    )
-    np.savetxt(
-        results_dir / "lqr_double_integrator_summary.csv",
-        summary,
-        delimiter=",",
-        header="time_s,position_m,velocity_m_per_s,control_input",
-        comments="",
-    )
-
-    wrote_plot = write_plot(media_dir, time, control_time, states, controls)
-
-    print("LQR gain K:", np.array2string(K, precision=4))
-    print("Final state:", np.array2string(states[-1], precision=4))
+    print("LQR gain K: [[{:.4f}, {:.4f}]]".format(K[0][0], K[0][1]))
+    print("Final state: [{:.4f}, {:.4f}]".format(states[-1][0], states[-1][1]))
     print("Wrote results/lqr_double_integrator_summary.csv")
     if wrote_plot:
         print("Wrote media/lqr_double_integrator.png")
