@@ -55,7 +55,7 @@ git clone https://github.com/WikiGenius/robotics-control-learning-labs.git
 cd robotics-control-learning-labs
 ```
 
-Optional Python environment for analysis scripts:
+The starter LQR script can run with the Python standard library only. Optional analysis dependencies can be installed with:
 
 ```bash
 python -m venv .venv
@@ -71,7 +71,7 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-The LQR starter script requires `numpy`. If `matplotlib` is installed, it also writes a plot.
+If `matplotlib` is installed, the LQR starter script also writes a plot.
 
 MATLAB/Simulink labs will list their required toolboxes in the lab notes.
 
