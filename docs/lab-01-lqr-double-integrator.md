@@ -30,10 +30,15 @@ From the repository root:
 python scripts/lqr_double_integrator.py
 ```
 
-The script writes:
+The script always writes:
 
 ```text
 results/lqr_double_integrator_summary.csv
+```
+
+If `matplotlib` is installed, it also writes:
+
+```text
 media/lqr_double_integrator.png
 ```
 
@@ -45,7 +50,7 @@ The example establishes the structure for future labs:
 2. choose costs,
 3. solve for a controller,
 4. simulate closed-loop behavior,
-5. save results and media,
+5. save results and optional media,
 6. state what is simplified.
 
 Future labs can extend this pattern to observers, trajectory tracking, and simplified mobile-manipulator examples.
