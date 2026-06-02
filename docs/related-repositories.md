@@ -12,12 +12,6 @@ This page explains how the control repositories fit together.
 | [`Cruise_control`](https://github.com/WikiGenius/Cruise_control) | MATLAB/Simulink control exercise | Shows classical control modeling and simulation practice. |
 | [`RoboticScrewTheoryToolkit`](https://github.com/WikiGenius/RoboticScrewTheoryToolkit) | Robot math toolkit | Supports kinematics, Jacobians, screw theory, and manipulator modeling. |
 
-## Archived Control History
-
-| Repo | Status | Note |
-|---|---|---|
-| [`3dof-robot-arm-report`](https://github.com/WikiGenius/3dof-robot-arm-report) | Archived | Preserved as an older robot-arm modeling/control report, but no longer part of the active public portfolio. |
-
 ## Private Companion Layer
 
 Unpublished control experiments, parameter sweeps, paper-specific uncertainty-aware control code, advisor notes, and internal ablations should remain private.

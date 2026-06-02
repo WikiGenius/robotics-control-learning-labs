@@ -29,8 +29,6 @@ Related public repos:
 | [`RoboticScrewTheoryToolkit`](https://github.com/WikiGenius/RoboticScrewTheoryToolkit) | Kinematics, screw theory, Jacobians, and robot math foundations. |
 | [`line-scan-mobile-manipulator-demo`](https://github.com/WikiGenius/line-scan-mobile-manipulator-demo) | Downstream active-scanning scaffold that will need planning/control foundations. |
 
-Archived report artifacts, such as `3dof-robot-arm-report`, remain available as history but are not part of the active control portfolio.
-
 ## Maturity Level
 
 **Current status:** Public research organization repo / control-family hub
