@@ -1,12 +1,12 @@
 # Robotics Control Learning Labs
 
-Public control-foundation hub for reproducible robotics/control learning artifacts, including state-space modeling, LQR, observers, trajectory tracking, and MATLAB/Simulink workflows.
+Public control-foundation hub for organizing robotics/control learning artifacts, including state-space modeling, LQR, observers, trajectory tracking, and MATLAB/Simulink workflows.
 
 ## Purpose
 
-This repository exists to organize public-safe control examples that support my robotics research portfolio without exposing unpublished PhD control experiments, advisor notes, paper drafts, or private ablations.
+This repository exists to organize public-safe control foundations that support my robotics research portfolio without exposing unpublished PhD control experiments, advisor notes, paper drafts, or private ablations.
 
-It is the broad pinned control hub. Focused public support repos, such as [`ipendulum`](https://github.com/WikiGenius/ipendulum), sit under this hub as concrete examples.
+It is the broad pinned control hub. Focused public support repos, such as [`ipendulum`](https://github.com/WikiGenius/ipendulum), sit under this hub as concrete examples of learning control on specific systems.
 
 ## Relation to My PhD Direction
 
@@ -33,18 +33,18 @@ Archived report artifacts, such as `3dof-robot-arm-report`, remain available as 
 
 ## Maturity Level
 
-**Current status:** Public research scaffold / early-stage organization repo with one runnable starter lab
+**Current status:** Public research organization repo / control-family hub
 
-This repository is currently intended to organize the public-facing control structure and host simplified, non-confidential demos. It does not yet represent a complete control library or a validated robot controller.
+This repository is currently intended to organize the public-facing control structure and connect related control repos. It does not currently contain a runnable in-repo lab script, complete control library, or validated robot controller.
 
 ### Implemented now
 
 - [x] Repository structure
 - [x] README and project organization
 - [x] Public related-repository map
-- [x] Minimal LQR toy demo
-- [x] CSV output from the LQR starter script
 - [x] Link to public inverted-pendulum control support repo
+- [x] Link to mobile-manipulator trajectory-tracking support repo
+- [ ] In-repo public-safe LQR lab
 - [ ] Observer lab in this repo
 - [ ] MATLAB/Simulink lab collection in this repo
 - [ ] Mobile-manipulator tracking comparison
@@ -63,11 +63,11 @@ This repository is currently intended to organize the public-facing control stru
 ## Current Contents
 
 ```text
-docs/       related-repository map and starter lab note
-scripts/    minimal LQR double-integrator starter script
-results/    CSV outputs from public-safe demos
-media/      optional plots/GIFs when generated
-src/        future reusable control code
+docs/       related-repository map and control-family notes
+scripts/    reserved for future public-safe scripts
+results/    reserved for future public-safe result tables
+media/      reserved for future plots/GIFs/screenshots
+src/        reserved for future reusable control code
 ```
 
 ## What This Repo Demonstrates Now
@@ -75,16 +75,14 @@ src/        future reusable control code
 This repo currently demonstrates:
 
 - a clean public hub for control-learning artifacts,
-- a dependency-free LQR double-integrator starter example,
-- an output pattern for saving public-safe result tables,
-- how focused support repos such as `ipendulum` fit under the control family.
-
-The starter LQR example is a toy baseline. It is not a robot controller and does not represent a publishable control method.
+- how focused support repos such as `ipendulum` fit under the control family,
+- how control foundations support mobile manipulation, active scanning, trajectory tracking, and uncertainty-aware planning,
+- a public/private boundary for keeping unpublished control research private until release.
 
 ## Planned Development Roadmap
 
 - **Stage 0: repository scaffold** - organize README, folders, related repos, and public/private policy.
-- **Stage 1: toy synthetic example** - maintain the double-integrator LQR starter lab.
+- **Stage 1: public-safe control lab** - add an intentionally reviewed, simple LQR or observer lab when ready.
 - **Stage 2: metric computation** - add tracking error, control effort, and settling-time metrics.
 - **Stage 3: baseline controllers** - add observer and feedback-control examples.
 - **Stage 4: robotics connection** - connect examples to trajectory tracking and mobile-manipulator scanning needs.
@@ -96,12 +94,11 @@ The starter LQR example is a toy baseline. It is not a robot controller and does
 
 Public here:
 
-- simplified examples,
-- toy systems,
-- public control baselines,
-- reproducible commands,
-- non-confidential plots/tables,
-- links to public support repos.
+- simplified explanations,
+- repo organization,
+- links to public support repos,
+- future public-safe examples,
+- non-confidential plots/tables after they are intentionally created.
 
 Private elsewhere:
 
@@ -114,23 +111,9 @@ Private elsewhere:
 
 ## How to Run
 
-Run the current starter lab:
+There is currently no runnable in-repo lab script in this public hub.
 
-```bash
-python scripts/lqr_double_integrator.py
-```
-
-The script always writes:
-
-```text
-results/lqr_double_integrator_summary.csv
-```
-
-If `matplotlib` is installed, it also writes:
-
-```text
-media/lqr_double_integrator.png
-```
+For concrete public control examples, see [`ipendulum`](https://github.com/WikiGenius/ipendulum) and the other related repos listed above.
 
 ## Expected Future Outputs
 
