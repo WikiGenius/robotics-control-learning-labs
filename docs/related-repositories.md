@@ -11,7 +11,12 @@ This page explains how the control repositories fit together.
 | [`wmm-trajectory-tracking`](https://github.com/WikiGenius/wmm-trajectory-tracking) | Whole-body trajectory tracking | Connects control to mobile-manipulator motion and scan execution. |
 | [`Cruise_control`](https://github.com/WikiGenius/Cruise_control) | MATLAB/Simulink control exercise | Shows classical control modeling and simulation practice. |
 | [`RoboticScrewTheoryToolkit`](https://github.com/WikiGenius/RoboticScrewTheoryToolkit) | Robot math toolkit | Supports kinematics, Jacobians, screw theory, and manipulator modeling. |
-| [`3dof-robot-arm-report`](https://github.com/WikiGenius/3dof-robot-arm-report) | Technical report | Preserves modeling/control write-up evidence in a clean artifact. |
+
+## Archived Control History
+
+| Repo | Status | Note |
+|---|---|---|
+| [`3dof-robot-arm-report`](https://github.com/WikiGenius/3dof-robot-arm-report) | Archived | Preserved as an older robot-arm modeling/control report, but no longer part of the active public portfolio. |
 
 ## Private Companion Layer
 
