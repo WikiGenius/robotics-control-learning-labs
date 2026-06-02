@@ -16,8 +16,9 @@ Use this repository as the public parent for control-related work:
 | [`wmm-trajectory-tracking`](https://github.com/WikiGenius/wmm-trajectory-tracking) | Whole-body mobile-manipulator trajectory tracking and control support. |
 | [`Cruise_control`](https://github.com/WikiGenius/Cruise_control) | MATLAB/Simulink control exercise and energy/control modeling artifact. |
 | [`RoboticScrewTheoryToolkit`](https://github.com/WikiGenius/RoboticScrewTheoryToolkit) | Kinematics, screw theory, Jacobians, and robot math foundations. |
-| [`3dof-robot-arm-report`](https://github.com/WikiGenius/3dof-robot-arm-report) | Technical report for robot-arm modeling, kinematics, and control. |
 | [`line-scan-mobile-manipulator-demo`](https://github.com/WikiGenius/line-scan-mobile-manipulator-demo) | Downstream active-scanning demo that will depend on planning and control foundations. |
+
+Archived report artifacts, such as `3dof-robot-arm-report`, remain available as history but are not part of the active control portfolio.
 
 Private companion work includes unpublished uncertainty-aware control experiments, paper-specific ablations, and internal parameter studies. Those should remain private until they are ready to become simplified public labs here.
 
@@ -34,7 +35,7 @@ This repository is meant to make control experiments easier to revisit, reproduc
 - Planned reproducible labs for state-space modeling.
 - Planned feedback-controller and observer examples.
 - Planned MATLAB/Simulink and optional Python analysis workflows.
-- Public links to related trajectory-tracking, kinematics, robot-arm, and scanning repos.
+- Public links to related trajectory-tracking, kinematics, robot math, and scanning repos.
 - Folder structure for reports, experiment logs, media, and results.
 
 ## Method
