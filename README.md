@@ -1,94 +1,25 @@
 # Robotics Control Learning Labs
 
-## Purpose
+An index of control and robot-geometry projects supporting [perception-aware motion planning](https://github.com/WikiGenius). This repository is a navigation hub; it does not currently contain a runnable lab.
 
-This repository is a public control-foundation hub for organizing robotics/control learning artifacts, including state-space modeling, LQR, observers, trajectory tracking, and MATLAB/Simulink workflows.
+## Where to start
 
-It supports the broader robotics research portfolio without exposing unpublished PhD control experiments, advisor notes, paper drafts, or private ablations.
+| Project | Study or implementation | Research connection |
+| --- | --- | --- |
+| [iPendulum](https://github.com/WikiGenius/ipendulum) | PID, LQR/LQG, observers, and simulation demonstrations | Feedback and estimation foundations |
+| [WMM planning and tracking](https://github.com/WikiGenius/wmm-planning-and-tracking) | Differential-drive mobile-manipulator planning and torque-level tracking | Coordinated motion execution |
+| [UGV–Panda geometric control](https://github.com/WikiGenius/ugv-panda-geometric-control) | Base/tool geometric impedance control in MATLAB | Pose tracking; a documented Jacobian defect remains unresolved |
+| [Cruise Control](https://github.com/WikiGenius/Cruise_control) | Motor/control and energy analysis in MATLAB/Simulink | Motion effort and actuator behavior |
+| [Screw Theory Toolkit](https://github.com/WikiGenius/RoboticScrewTheoryToolkit) | Kinematics, Jacobians, and inverse kinematics | Feasibility of robot and sensor poses |
 
-## Relation to Robotics and Control Research
+## Why control matters for perception-aware planning
 
-My research direction requires planning and control for mobile manipulation under sensing, geometry, and uncertainty constraints. This repo supports that direction by organizing:
+A sensing plan is useful only if the robot can execute it accurately enough for the task. Tracking error, actuator limits, and motion cost can affect observation quality. These projects provide foundations for studying that connection; they do not yet implement a common perception-aware controller.
 
-- state-space modeling practice,
-- LQR and feedback-control baselines,
-- observer/state-estimation examples,
-- trajectory-tracking foundations,
-- MATLAB/Simulink and Python analysis patterns,
-- public control examples that can later connect to active scanning.
+The broader research is adaptable to different sensors and robot platforms. The cart-pole, wheeled manipulator, and UGV–Panda models here are specific examples.
 
-Related public repos:
+## Planned additions
 
-| Related repo | Public role |
-|---|---|
-| [`ipendulum`](https://github.com/WikiGenius/ipendulum) | Inverted-pendulum MATLAB/Simulink lab with PID, LQR, pole placement, observers, LQG, and demo animations. |
-| [`wmm-trajectory-tracking`](https://github.com/WikiGenius/wmm-trajectory-tracking) | Whole-body mobile-manipulator trajectory tracking and control support. |
-| [`Cruise_control`](https://github.com/WikiGenius/Cruise_control) | MATLAB/Simulink control exercise and energy/control artifact. |
-| [`RoboticScrewTheoryToolkit`](https://github.com/WikiGenius/RoboticScrewTheoryToolkit) | Kinematics, screw theory, Jacobians, and robot math foundations. |
-| [`line-scan-mobile-manipulator-demo`](https://github.com/WikiGenius/line-scan-mobile-manipulator-demo) | Downstream active-scanning scaffold that will need planning/control foundations. |
+Add a self-contained lab only when its code, dependencies, run command, and expected outputs are available. Useful future comparisons include tracking accuracy, control effort, and sensitivity to disturbances.
 
-## Maturity Level
-
-**Current status:** Public research organization repo / control-family hub.
-
-This repository currently organizes the public-facing control structure and connects related control repos. It does not currently contain a runnable in-repo lab script, complete control library, or tested robot controller.
-
-## Implemented Now
-
-- [x] Repository structure.
-- [x] README and project organization.
-- [x] Public related-repository map.
-- [x] Link to public inverted-pendulum control support repo.
-- [x] Link to mobile-manipulator trajectory-tracking support repo.
-- [ ] In-repo public-safe LQR lab.
-- [ ] Observer lab in this repo.
-- [ ] MATLAB/Simulink lab collection in this repo.
-- [ ] Mobile-manipulator tracking comparison.
-- [ ] Paper-supporting implementation.
-
-## Current Runnable Artifact
-
-There is currently no runnable in-repo lab script in this public hub.
-
-For concrete public control examples, see [`ipendulum`](https://github.com/WikiGenius/ipendulum) and the related repositories listed above.
-
-## Planned Labs
-
-- Public-safe LQR lab.
-- Observer/state-estimation lab.
-- State-space modeling notes.
-- MATLAB/Simulink control examples.
-- Trajectory-tracking metric comparison.
-- Public plot or GIF generated from a real lab.
-
-## Limitations
-
-This repository is currently an early-stage public control scaffold. It does not yet include:
-
-- a full control curriculum,
-- a tested robot controller,
-- a mobile-manipulator tracking benchmark,
-- complete observer labs,
-- paper-level results.
-
-MATLAB/Simulink examples may require licensed toolboxes.
-
-## How to Run
-
-No run command is available yet because no in-repo runnable lab script is currently included.
-
-When the first real public-safe lab is added and tested, this section should include:
-
-```bash
-python scripts/<lab_name>.py
-```
-
-Do not add generated plots or commands until the script and outputs actually exist.
-
-## Rights and Reuse
-
-This repository is shared as a public academic portfolio/scaffold. Unless a separate open-source license is explicitly added, all rights are reserved by the author.
-
-## Related Organization
-
-See [`docs/related-repositories.md`](docs/related-repositories.md) for how the control repositories fit into the public/private research structure.
+Run instructions and license terms belong to each linked project. MATLAB/Simulink examples may require licensed toolboxes. No project-wide open-source license is granted by this index.
